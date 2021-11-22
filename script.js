@@ -1,13 +1,16 @@
+// Finds the containers that we we'll be manipulating information inside of
 var wordBlank = document.querySelector(".word-blanks");
 var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.querySelector(".start-button");
 
+// Declare chosenWord as an empty string globally because they will probably change it in a function
 var chosenWord = "";
 var numBlanks = 0;
 var winCounter = 0;
 var loseCounter = 0;
+// default is that the person hasn't won yet until it gets updated!
 var isWin = false;
 var timer;
 var timerCount;
@@ -19,13 +22,13 @@ var blanksLetters = [];
 // Array of words the user will guess
 var words = ["variable","array", "modulus", "object", "function", "string", "boolean"];
 
-// The init function is called when the page loads 
+// The init function is called when the page loads at the start so that you can pull from localstorage
 function init() {
   getWins();
   getlosses();
 }
 
-// The startGame function is called when the start button is clicked
+// The startGame function is called when the start button is clicked on line 176
 function startGame() {
   isWin = false;
   timerCount = 10;
@@ -59,14 +62,14 @@ function startTimer() {
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       // Tests if win condition is met
-      if (isWin && timerCount > 0) {
+      if (isWin && timerCount > 0) { //this is an if statement instead of an else so that the first if keeps running
         // Clears interval and stops timer
         clearInterval(timer);
         winGame();
       }
     }
     // Tests if time has run out
-    if (timerCount === 0) {
+    if (timerCount === 0) { //this never happened if set to an "else if"
       // Clears interval
       clearInterval(timer);
       loseGame();
@@ -78,9 +81,9 @@ function startTimer() {
 function renderBlanks() {
   // Randomly picks word from words array
   chosenWord = words[Math.floor(Math.random() * words.length)];
-  lettersInChosenWord = chosenWord.split("");
-  numBlanks = lettersInChosenWord.length;
-  blanksLetters = []
+  lettersInChosenWord = chosenWord.split(""); // turning the word into an array of letters
+  numBlanks = lettersInChosenWord.length; // setting the number of spaces that are blank initially
+  blanksLetters = [] // clears out whatever was there before the guessing begins (reset)
   // Uses loop to push blanks to blankLetters array
   for (var i = 0; i < numBlanks; i++) {
     blanksLetters.push("_");
@@ -174,6 +177,9 @@ startButton.addEventListener("click", startGame);
 
 // Calls init() so that it fires when page opened
 init();
+
+
+
 
 // Bonus: Add reset button
 var resetButton = document.querySelector(".reset-button");
